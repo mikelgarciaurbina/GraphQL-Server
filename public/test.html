@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <form action="/graphql" method="post" id="form">
+      <input type="submit" value="Submit">
+    </form>
+    <script type="text/javascript">
+      var form = document.getElementById("form");
+      form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        // const params = { query : `{
+        //   user {
+        //     id
+        //     name
+        //     email
+        //   }
+        // }`};
+        // const params = { query : `mutation addUser($email: String!, $lastname: String, $name: String, $password: String!, $role: String!) {
+        //   addUser(email: $email, lastname: $lastname, name: $name, password: $password, role: $role) {
+        //     user {
+        //       id
+        //       name
+        //       email
+        //     }
+        //     errors {
+        //       code
+        //       message
+        //     }
+        //   }
+        // }`, variables: {
+        //   email: 'mikelgarciaurbina@gmail.com',
+        //   lastname: 'Garcia',
+        //   name: 'Mikel',
+        //   password: 'prueba',
+        //   role: 'admin',
+        // }};
+        const params = { query : `mutation login($email: String!, $password: String!) {
+          login(email: $email, password: $password) {
+            session {
+              id
+              token
+            }
+            errors {
+              code
+              message
+            }
+          }
+        }`, variables: {
+          email: 'mikelgarciaurbina@gmail.com',
+          password: 'prueba',
+        }};
+        loadDoc(params);
+      });
+
+      function loadDoc(params) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (xhttp.readyState == 4 && xhttp.status == 200) {
+            console.log(xhttp.responseText);
+          }
+        };
+        xhttp.open("POST", "http://localhost:4000/graphql", true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(JSON.stringify(params));
+      }
+    </script>
+  </body>
+</html>

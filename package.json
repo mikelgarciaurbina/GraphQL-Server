@@ -1,0 +1,39 @@
+{
+  "name": "GraphQL-Server",
+  "version": "0.1.0",
+  "description": "GraphQL Server",
+  "main": "main.js",
+  "scripts": {
+    "start": "node --require 'dotenv/config' start.js",
+    "lint": "eslint ."
+  },
+  "author": {
+    "name": "Mikel Garcia",
+    "url": "https://github.com/mikelgarciaurbina"
+  },
+  "license": "Beerware",
+  "dependencies": {
+    "babel-polyfill": "^6.13.0",
+    "babel-preset-node5": "^11.1.0",
+    "babel-register": "^6.11.6",
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.15.2",
+    "dataloader": "^1.2.0",
+    "dotenv": "^2.0.0",
+    "express": "^4.14.0",
+    "graphql": "^0.8.2",
+    "jsonwebtoken": "^7.1.9",
+    "lodash": "^4.17.4",
+    "pg": "^6.0.3",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.23.6",
+    "umzug": "^1.11.0"
+  },
+  "devDependencies": {
+    "Faker": "^0.7.2",
+    "babel-eslint": "^7.1.1",
+    "eslint": "^3.12.2",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0"
+  }
+}
