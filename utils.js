@@ -105,4 +105,17 @@ const createToken = function(data) {
   return jwt.sign(data, process.env.token_secret);
 };
 
-export { createToken, eachFileIn, loadGraph, loadSchema, loadServices };
+const verifyToken = function(token) {
+  let result;
+  if (token) {
+    try {
+      result = jwt.verify(token, process.env.token_secret);
+    } catch (err) {
+      result = 'Token error';
+    }
+    return result;
+  }
+  return {};
+};
+
+export { createToken, eachFileIn, loadGraph, loadSchema, loadServices, verifyToken };

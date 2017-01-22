@@ -13,8 +13,10 @@ app.use(BodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use('/public', express.static('public'));
 
 app.post('/graphql', (req, res) => {
-  graphql(application.schema, req.body.query, req.body.source, {}, req.body.variables).then((result) => {
-    res.send({ data: result });
+  application.services.authorization.auth(req.headers.authorization).then((currentUser) => {
+    graphql(application.schema, req.body.query, req.body.source, currentUser, req.body.variables).then((result) => {
+      res.send({ data: result });
+    });
   });
 });
 
