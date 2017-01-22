@@ -6,38 +6,17 @@
   </head>
   <body>
     <form action="/graphql" method="post" id="form">
+      <input id="email" type="email" name="email" value="">
+      <input id="password" type="password" name="password" value="">
       <input type="submit" value="Submit">
     </form>
+    <p id="result"></p>
     <script type="text/javascript">
       var form = document.getElementById("form");
-      form.addEventListener("submit", function(event) {
+      form.addEventListener("submit", function(event, a, b) {
         event.preventDefault();
-        // const params = { query : `{
-        //   user {
-        //     id
-        //     name
-        //     email
-        //   }
-        // }`};
-        // const params = { query : `mutation addUser($email: String!, $lastname: String, $name: String, $password: String!, $role: String!) {
-        //   addUser(email: $email, lastname: $lastname, name: $name, password: $password, role: $role) {
-        //     user {
-        //       id
-        //       name
-        //       email
-        //     }
-        //     errors {
-        //       code
-        //       message
-        //     }
-        //   }
-        // }`, variables: {
-        //   email: 'mikelgarciaurbina@gmail.com',
-        //   lastname: 'Garcia',
-        //   name: 'Mikel',
-        //   password: 'prueba',
-        //   role: 'admin',
-        // }};
+        var email = document.getElementById("email");
+        var password = document.getElementById("password");
         const params = { query : `mutation login($email: String!, $password: String!) {
           login(email: $email, password: $password) {
             session {
@@ -50,8 +29,8 @@
             }
           }
         }`, variables: {
-          email: 'mikelgarciaurbina@gmail.com',
-          password: 'prueba',
+          email: email.value,
+          password: password.value,
         }};
         loadDoc(params);
       });
@@ -60,6 +39,8 @@
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
           if (xhttp.readyState == 4 && xhttp.status == 200) {
+            var result = document.getElementById("result");
+            result.innerHTML = xhttp.responseText;
             console.log(xhttp.responseText);
           }
         };

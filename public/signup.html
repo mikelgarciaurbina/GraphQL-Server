@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <form action="/graphql" method="post" id="form">
+      <label for="name">Name</label>
+      <input id="name" type="name" name="name" value="">
+      <label for="lastname">Lastname</label>
+      <input id="lastname" type="lastname" name="lastname" value="">
+      <label for="email">Email</label>
+      <input id="email" type="email" name="email" value="">
+      <label for="password">Password</label>
+      <input id="password" type="password" name="password" value="">
+      <input type="submit" value="Submit">
+    </form>
+    <p id="result"></p>
+    <script type="text/javascript">
+      var form = document.getElementById("form");
+      form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        var name = document.getElementById("name");
+        var lastname = document.getElementById("lastname");
+        var email = document.getElementById("email");
+        var password = document.getElementById("password");
+        const params = { query : `mutation addUser($email: String!, $lastname: String, $name: String, $password: String!, $role: String!) {
+          addUser(email: $email, lastname: $lastname, name: $name, password: $password, role: $role) {
+            user {
+              id
+              name
+              email
+            }
+            errors {
+              code
+              message
+            }
+          }
+        }`, variables: {
+          email: email.value,
+          lastname: lastname.value,
+          name: name.value,
+          password: password.value,
+          role: 'admin',
+        }};
+        loadDoc(params);
+      });
+
+      function loadDoc(params) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (xhttp.readyState == 4 && xhttp.status == 200) {
+            var result = document.getElementById("result");
+            result.innerHTML = xhttp.responseText;
+            console.log(xhttp.responseText);
+          }
+        };
+        xhttp.open("POST", "http://localhost:4000/graphql", true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(JSON.stringify(params));
+      }
+    </script>
+  </body>
+</html>
